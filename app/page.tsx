@@ -21,7 +21,7 @@ const products = [
   { id: 'extraa-moisturising-body-lotion', name: 'Extraa Moisturising Body Lotion', price: 599, meta: 'Body Care - Moisture', description: 'Daily moisturising body care.', tag: 'Body care', tone: 'lilac', product: 'cream', image: '/products/extraa-moisturising-body-lotion.jpeg' },
   { id: 'vitamin-c-serum', name: 'Vitamin-C Serum', price: 450, meta: 'Serum - Vitamin C', description: 'Vitamin C skincare serum.', tag: 'New', tone: 'cream', product: 'serum', image: '/products/vitamin-c-serum.jpeg' },
   { id: 'de-pigmentation-serum', name: 'De-Pigmentation Serum', price: 450, meta: 'Serum - Targeted care', description: 'Targeted skincare serum.', tag: 'New', tone: 'lilac', product: 'serum', image: '/products/de-pigmentation-serum.jpeg' },
-  { id: 'sunscreen', name: 'Sunscreen', price: 1, meta: 'Daily skincare protection', description: 'Daily skincare protection.', tag: 'Daily essential', tone: 'cream', product: 'cream', image: '/products/sunscreen.jpeg' },
+  { id: 'sunscreen', name: 'Sunscreen', price: 449, meta: 'Daily skincare protection', description: 'Daily skincare protection.', tag: 'Daily essential', tone: 'cream', product: 'cream', image: '/products/sunscreen.jpeg' },
 ]
 
 

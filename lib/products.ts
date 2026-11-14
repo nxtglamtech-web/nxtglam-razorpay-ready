@@ -14,7 +14,7 @@ export const PRODUCTS: Product[] = [
   { id: 'extraa-moisturising-body-lotion', name: 'Extraa Moisturising Body Lotion', description: 'Daily moisturising body care.', priceInCents: 59900 },
   { id: 'vitamin-c-serum', name: 'Vitamin-C Serum', description: 'Vitamin C skincare serum.', priceInCents: 45000 },
   { id: 'de-pigmentation-serum', name: 'De-Pigmentation Serum', description: 'Targeted skincare serum.', priceInCents: 45000 },
-  { id: 'sunscreen', name: 'Sunscreen', description: 'Daily sun care for your skincare routine.', priceInCents: 100 },
+  { id: 'sunscreen', name: 'Sunscreen', description: 'Daily sun care for your skincare routine.', priceInCents: 44900 },
 ]
 
 export function getProduct(id: string) {
