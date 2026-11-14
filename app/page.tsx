@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useMemo, useState } from 'react'
 import { createRazorpayOrder, verifyRazorpayPayment } from './actions/checkout'
@@ -12,14 +12,18 @@ declare global {
   }
 }
 
+
 const products = [
-  { id: 'sunscreen', name: 'Sunscreen', price: 449, meta: 'Daily skincare protection', description: 'Daily skincare protection.', tag: 'Daily essential', tone: 'cream', product: 'cream', image: '/products/sunscreen.jpeg' },
-  { id: 'instant-glow-facewash', name: 'Instant Glow Face Wash', price: 399, meta: 'Face Wash • Glow', description: 'A refreshing face wash for instant glow.', tag: 'New', tone: 'peach', product: 'wash', image: '/products/instant-glow-facewash.jpeg' },
-  { id: 'body-butter', name: 'Body Butter', price: 599, meta: 'Body Care • Moisture', description: 'Rich moisture for soft, smooth skin.', tag: 'Body care', tone: 'lilac', product: 'cream', image: '/products/body-butter.jpeg' },
-  { id: 'moisturising-facewash', name: 'Moisturising Face Wash', price: 399, meta: 'Face Wash • Moisture', description: 'A gentle moisturising daily cleanse.', tag: 'Daily essential', tone: 'cream', product: 'wash', image: '/products/moisturising-facewash.jpeg' },
-  { id: 'even-skin-facewash', name: 'Even Skin Face Wash', price: 399, meta: 'Face Wash • Even Skin', description: 'A daily cleanse for an even-looking complexion.', tag: 'New', tone: 'lilac', product: 'wash', image: '/products/even-skin-facewash.jpeg' },
-  { id: 'oil-control-facewash', name: 'Oil Control Face Wash', price: 399, meta: 'Face Wash • Oil Control', description: 'A refreshing cleanse for oil control.', tag: 'Bestseller', tone: 'blue', product: 'wash', image: '/products/oil-control-facewash.jpeg' },
+  { id: 'skin-brightening-facewash', name: 'Skin Brightening Face Wash', price: 399, meta: 'Face Wash - Brightening', description: 'A refreshing daily face wash.', tag: 'New', tone: 'peach', product: 'wash', image: '/products/skin-brightening-facewash.jpeg' },
+  { id: 'fresh-burst-moisturising-facewash', name: 'Fresh-Burst Moisturising Face Wash', price: 399, meta: 'Face Wash - Moisture', description: 'A refreshing moisturising cleanse.', tag: 'Daily essential', tone: 'cream', product: 'wash', image: '/products/fresh-burst-moisturising-facewash.jpeg' },
+  { id: 'oil-control-facewash', name: 'Oil Control Face Wash', price: 399, meta: 'Face Wash - Oil Control', description: 'A refreshing cleanse for oil control.', tag: 'Bestseller', tone: 'blue', product: 'wash', image: '/products/oil-control-facewash.jpeg' },
+  { id: 'insta-glow-facewash', name: 'Insta Glow Face Wash', price: 399, meta: 'Face Wash - Glow', description: 'A refreshing face wash for a glowing look.', tag: 'New', tone: 'peach', product: 'wash', image: '/products/insta-glow-facewash.jpeg' },
+  { id: 'extraa-moisturising-body-lotion', name: 'Extraa Moisturising Body Lotion', price: 599, meta: 'Body Care - Moisture', description: 'Daily moisturising body care.', tag: 'Body care', tone: 'lilac', product: 'cream', image: '/products/extraa-moisturising-body-lotion.jpeg' },
+  { id: 'vitamin-c-serum', name: 'Vitamin-C Serum', price: 450, meta: 'Serum - Vitamin C', description: 'Vitamin C skincare serum.', tag: 'New', tone: 'cream', product: 'serum', image: '/products/vitamin-c-serum.jpeg' },
+  { id: 'de-pigmentation-serum', name: 'De-Pigmentation Serum', price: 450, meta: 'Serum - Targeted care', description: 'Targeted skincare serum.', tag: 'New', tone: 'lilac', product: 'serum', image: '/products/de-pigmentation-serum.jpeg' },
+  { id: 'sunscreen', name: 'Sunscreen', price: 1, meta: 'Daily skincare protection', description: 'Daily skincare protection.', tag: 'Daily essential', tone: 'cream', product: 'cream', image: '/products/sunscreen.jpeg' },
 ]
+
 
 function ProductVisual({ tone, product, image }: { tone: string; product: string; image?: string }) {
   if (image) return <div className="product-visual image-visual"><img src={image} alt="" /></div>
@@ -39,6 +43,15 @@ export default function Page() {
   const add = (name: string) => setCart(c => ({ ...c, [name]: (c[name] || 0) + 1 }))
   const change = (name: string, by: number) => setCart(c => { const next = (c[name] || 0) + by; const copy = { ...c }; if (next <= 0) delete copy[name]; else copy[name] = next; return copy })
   const [checkoutLoading, setCheckoutLoading] = useState(false)
+  const [customer, setCustomer] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    address: '',
+    city: '',
+    state: '',
+    pincode: '',
+  })
 
   const loadRazorpay = () =>
     new Promise<boolean>((resolve) => {
@@ -68,6 +81,7 @@ export default function Page() {
 
       const { orderId, amount, currency, keyId } = await createRazorpayOrder(
         Object.fromEntries(items.map(p => [p.id, cart[p.name]])),
+        customer,
       )
 
       const razorpay = new window.Razorpay({
@@ -128,7 +142,7 @@ export default function Page() {
 
     <section className="shop section" id="shop"><div className="section-heading"><div><p className="eyebrow">BESTSELLERS</p><h2>Shop the drop</h2><p>Curated essentials for a simple, high performance routine.</p></div><a className="view-all" href="#shop">View all <ArrowRight size={15}/></a></div><div className="products">{products.map(p => <article className="product-card" key={p.name}><div className="card-top"><ProductVisual tone={p.tone} product={p.product} image={p.image}/><span className="category">{p.tag}</span></div><div className="product-info"><div className="product-title"><h3>{p.name}</h3><span className="rating"><Star size={12} fill="currentColor"/> 4.9</span></div><p className="meta">{p.meta}</p><p className="description">{p.description}</p><div className="product-bottom"><strong>{'\u20B9'}{p.price.toLocaleString('en-IN')}</strong><button onClick={() => add(p.name)}>Add to cart <Plus size={14}/></button></div></div></article>)}</div></section>
 
-    <section className="story section" id="story"><div className="story-inner"><div className="story-heading"><p className="eyebrow light">THE NXTGLAM STANDARD</p><h2>Maximum effort.<br/>Maximum glow.</h2><p>Skincare that keeps up with the heat, the humidity and everything your day asks of you. No shortcuts, no empty promises-just formulas that work.</p><div className="story-buttons"><a className="button light-button" href="#shop">Build my routine</a><a className="button outline-button" href="#footer">Need help choosing?</a></div></div><div className="standard-list">{['Designed for Indian skin tones','Engineered for Indian climate','Barrier-first formulas','No empty promises'].map((t, i) => <div className="standard" key={t}><span>0{i + 1}</span><strong>{t}</strong><ArrowRight size={17}/></div>)}</div></div></section>
+    <section className="story section" id="story"><div className="story-inner"><div className="story-heading"><p className="eyebrow light">THE NXTGLAM STANDARD</p><h2>Minimal effort.<br/>Maximum glow.</h2><p>Skincare that keeps up with the heat, the humidity and everything your day asks of you. No shortcuts, no empty promises-just formulas that work.</p><div className="story-buttons"><a className="button light-button" href="#shop">Build my routine</a><a className="button outline-button" href="#footer">Need help choosing?</a></div></div><div className="standard-list">{['Designed for Indian skin tones','Engineered for Indian climate','Barrier-first formulas','No empty promises'].map((t, i) => <div className="standard" key={t}><span>0{i + 1}</span><strong>{t}</strong><ArrowRight size={17}/></div>)}</div></div></section>
 
     <section className="philosophy section" id="philosophy"><div className="philosophy-inner"><div className="philosophy-intro"><p className="eyebrow">OUR PHILOSOPHY</p><h2>Skincare,<br/>with purpose.</h2><p className="philosophy-lead">NxtGlam is where science meets self-care.</p></div><div className="philosophy-copy"><p>At NxtGlam, we believe skincare should do more than simply look beautiful on your shelf-it should make a visible difference to your skin.</p><p>We bring together effective actives, thoughtful formulations and modern skincare science to create targeted solutions for real skin concerns. From pigmentation and uneven skin tone to dullness, acne and hydration, every NxtGlam product is designed with a clear purpose: to help your skin look healthier, feel better and glow with confidence.</p><p>Our philosophy is simple-less noise, more efficacy. We believe in purposeful ingredients, considered formulations and products that fit effortlessly into everyday routines.</p><p>Skincare is personal. That is why NxtGlam is designed to make people feel good about taking care of their skin-not overwhelmed by it. Our approach balances science with sensoriality, efficacy with simplicity, and performance with beauty.</p><strong>Targeted skincare. Thoughtfully formulated. Made for your skin journey.</strong></div></div></section>
 
@@ -139,7 +153,19 @@ export default function Page() {
       <button className="chat-launcher" onClick={() => setChatOpen(!chatOpen)} aria-label={chatOpen ? 'Close live chat' : 'Open live chat'}><MessageCircle size={19}/><span>{chatOpen ? 'Close' : 'Chat with us'}</span></button>
     </div>
 
-    {cartOpen && <div className="cart-overlay" onClick={() => setCartOpen(false)}><aside className="cart-drawer" onClick={e => e.stopPropagation()}><div className="cart-head"><div><p className="eyebrow">YOUR BAG</p><h2>Your cart <span>({count})</span></h2></div><button onClick={() => setCartOpen(false)} aria-label="Close cart"><X size={20}/></button></div>{items.length === 0 ? <div className="empty-cart"><ShoppingBag size={32}/><p>Your bag is waiting for a little glow.</p><button className="button primary" onClick={() => setCartOpen(false)}>Continue shopping</button></div> : <><div className="cart-items">{items.map(p => <div className="cart-item" key={p.name}><ProductVisual tone={p.tone} product={p.product} image={p.image}/><div><h3>{p.name}</h3><strong>{'\u20B9'}{p.price.toLocaleString('en-IN')}</strong><div className="quantity"><button onClick={() => change(p.name, -1)}><Minus size={13}/></button><span>{cart[p.name]}</span><button onClick={() => change(p.name, 1)}><Plus size={13}/></button></div></div></div>)}</div><div className="cart-total"><span>Subtotal</span><strong>{'\u20B9'}{total.toLocaleString('en-IN')}</strong></div><button className="button primary checkout" onClick={checkout}>{checkoutLoading ? "Opening Razorpay..." : "Pay securely with Razorpay"} <ArrowRight size={16}/></button></>}</aside></div>}
+    {cartOpen && <div className="cart-overlay" onClick={() => setCartOpen(false)}><aside className="cart-drawer" onClick={e => e.stopPropagation()}><div className="cart-head"><div><p className="eyebrow">YOUR BAG</p><h2>Your cart <span>({count})</span></h2></div><button onClick={() => setCartOpen(false)} aria-label="Close cart"><X size={20}/></button></div>{items.length === 0 ? <div className="empty-cart"><ShoppingBag size={32}/><p>Your bag is waiting for a little glow.</p><button className="button primary" onClick={() => setCartOpen(false)}>Continue shopping</button></div> : <><div className="cart-items">{items.map(p => <div className="cart-item" key={p.name}><ProductVisual tone={p.tone} product={p.product} image={p.image}/><div><h3>{p.name}</h3><strong>{'\u20B9'}{p.price.toLocaleString('en-IN')}</strong><div className="quantity"><button onClick={() => change(p.name, -1)}><Minus size={13}/></button><span>{cart[p.name]}</span><button onClick={() => change(p.name, 1)}><Plus size={13}/></button></div></div></div>)}</div><div className="cart-total"><span>Subtotal</span><strong>{'\u20B9'}{total.toLocaleString('en-IN')}</strong></div><form className="customer-details" onSubmit={e => { e.preventDefault(); checkout() }}>
+  <p className="eyebrow">DELIVERY DETAILS</p>
+  <input required maxLength={100} autoComplete="name" placeholder="Full Name" value={customer.name} onChange={e => setCustomer({...customer, name:e.target.value})} />
+  <input required type="email" autoComplete="email" placeholder="Email Address" value={customer.email} onChange={e => setCustomer({...customer, email:e.target.value})} />
+  <input required type="tel" minLength={10} maxLength={15} autoComplete="tel" placeholder="Mobile Number" value={customer.phone} onChange={e => setCustomer({...customer, phone:e.target.value})} />
+  <textarea required maxLength={500} autoComplete="street-address" placeholder="Full Delivery Address / House No. / Street" value={customer.address} onChange={e => setCustomer({...customer, address:e.target.value})} />
+  <input required autoComplete="address-level2" placeholder="City" value={customer.city} onChange={e => setCustomer({...customer, city:e.target.value})} />
+  <input required autoComplete="address-level1" placeholder="State" value={customer.state} onChange={e => setCustomer({...customer, state:e.target.value})} />
+  <input required inputMode="numeric" pattern="[0-9]{6}" maxLength={6} autoComplete="postal-code" placeholder="6-digit Pincode" value={customer.pincode} onChange={e => setCustomer({...customer, pincode:e.target.value})} />
+  <button type="submit" className="button primary checkout" disabled={checkoutLoading}>{checkoutLoading ? "Opening Razorpay..." : "Continue to Payment"} <ArrowRight size={16}/></button>
+</form></>}</aside></div>}
   </main>
 }
+
+
 
