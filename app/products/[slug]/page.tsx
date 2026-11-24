@@ -53,7 +53,7 @@ export default function ProductDetailPage() {
   return (
     <main className="product-detail-page">
       <header className="detail-header">
-        <Link href="/" className="detail-logo">NXTGLAM</Link>
+        <Link href="/" className="detail-logo"><img src="/nxtglam-new-logo.png" alt="NXTGLAM" /></Link>
         <div className="detail-header-actions"><Link href="/?checkout=1" className="detail-top-cart">🛍 BAG {cartCount > 0 && <span className="detail-cart-count">{cartCount}</span>}</Link><Link href="/" className="detail-back">← Continue Shopping</Link></div>
       </header>
 
