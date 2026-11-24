@@ -1,10 +1,12 @@
-﻿
+
 export interface Product {
   id: string
   name: string
   description: string
   priceInCents: number
   image: string
+  galleryImages?: string[]
+  howToUseImage?: string
   tagline: string
   quantity: string
   benefits: string[]
@@ -21,6 +23,8 @@ export const PRODUCTS: Product[] = [
 A gentle blend of Potassium Azeloyl Diglycinate, Coco-Glucoside and Lauryl Glucoside, complemented by Glycerin, Sorbitol and Sodium Lactate to help cleanse, condition and maintain skin moisture.`,
     priceInCents: 39900,
     image: '/products/skin-brightening-facewash.jpeg',
+    galleryImages: ['/products/skin-brightening-facewash.jpeg', '/products/skin-brightening-facewash-back.jpeg', '/products/skin-brightening-how-to-use.jpeg', '/products/skin-brightening-details.jpeg'],
+    howToUseImage: '/products/skin-brightening-how-to-use.jpeg',
     tagline: 'Gentle Cleansing',
     quantity: '100ml',
     benefits: [
@@ -47,6 +51,8 @@ A gentle blend of Potassium Azeloyl Diglycinate, Coco-Glucoside and Lauryl Gluco
 A skin-loving blend of Panthenol, Glycerin and Propanediol to help maintain hydration, combined with Salicylic Acid, Walnut Shell Powder and Cellulose to cleanse, exfoliate and refine the skin's feel.`,
     priceInCents: 39900,
     image: '/products/fresh-burst-moisturising-facewash.jpeg',
+    galleryImages: ['/products/fresh-burst-moisturising-facewash.jpeg', '/products/fresh-burst-facewash-back.jpeg', '/products/fresh-burst-how-to-use.jpeg', '/products/fresh-burst-details.jpeg'],
+    howToUseImage: '/products/fresh-burst-how-to-use.jpeg',
     tagline: 'Deep Cleansing',
     quantity: '100ml',
     benefits: [
@@ -73,6 +79,8 @@ A skin-loving blend of Panthenol, Glycerin and Propanediol to help maintain hydr
 A powerful blend of Niacinamide, Zinc PCA and Salicylic Acid to help manage excess oil and cleanse pores, complemented by Glycerin and Honey to help maintain moisture. Walnut Shell Powder adds gentle exfoliation for a smoother, refreshed skin feel.`,
     priceInCents: 39900,
     image: '/products/oil-control-facewash.jpeg',
+    galleryImages: ['/products/oil-control-facewash.jpeg', '/products/oil-control-facewash-back.jpeg', '/products/oil-control-how-to-use.jpeg', '/products/oil-control-details.jpeg'],
+    howToUseImage: '/products/oil-control-how-to-use.jpeg',
     tagline: 'Oil Control',
     quantity: '100ml',
     benefits: [
@@ -100,6 +108,7 @@ A powerful blend of Niacinamide, Zinc PCA and Salicylic Acid to help manage exce
 A skin-loving blend of Niacinamide, Vitamin C, Green Tea Extract, Licorice Extract, Glycerin and Vitamin E, complemented by gentle exfoliating particles from Walnut and Apricot Shell Powders.`,
     priceInCents: 39900,
     image: '/products/insta-glow-facewash.jpeg',
+    galleryImages: ['/products/insta-glow-facewash.jpeg', '/products/insta-glow-facewash-back.jpeg', '/products/insta-glow-how-to-use.jpeg', '/products/insta-glow-details.jpeg'],
     tagline: 'Brighten & Glow',
     quantity: '100ml',
     benefits: [
@@ -129,6 +138,8 @@ A skin-loving blend of Niacinamide, Vitamin C, Green Tea Extract, Licorice Extra
 Enriched with the goodness of Coconut Oil, Almond Oil, Beeswax, Cocoa Butter and Shea Butter, this nourishing blend helps replenish moisture, soften dry skin and maintain lasting hydration. Thoughtfully formulated with Phenoxyethanol and Ethylhexylglycerin as preservatives.`,
     priceInCents: 59900,
     image: '/products/extraa-moisturising-body-lotion.jpeg',
+    galleryImages: ['/products/extraa-moisturising-body-lotion.jpeg', '/products/extraa-moisturising-body-lotion-back.jpeg', '/products/body-lotion-how-to-use.jpeg', '/products/body-lotion-details.jpeg'],
+    howToUseImage: '/products/body-lotion-how-to-use.jpeg',
     tagline: '24-Hour Moisture',
     quantity: '250ml',
     benefits: [
@@ -157,6 +168,7 @@ Enriched with the goodness of Coconut Oil, Almond Oil, Beeswax, Cocoa Butter and
 A powerful blend of Vitamin C, Ferulic Acid and Vitamin E for antioxidant care, complemented by Melazero, Green Tea Extract, Aquaxyl, Hyaluronic Acid and Glycerin to support skin hydration, radiance and an even-looking complexion.`,
     priceInCents: 45000,
     image: '/products/vitamin-c-serum.jpeg',
+    galleryImages: ['/products/vitamin-c-serum.jpeg', '/products/vitamin-c-serum-how-to-use.jpeg'],
     tagline: 'Brighten & Revitalise',
     quantity: '10ml',
     benefits: [
@@ -186,6 +198,7 @@ A powerful blend of Vitamin C, Ferulic Acid and Vitamin E for antioxidant care, 
 A powerful combination of Vitamin C, Niacinamide, Kojic Acid, Alpha Arbutin, PAD and Tranexamic Acid, complemented by Glutathione, Ferulic Acid, Vitamin E and skin-hydrating ingredients for a brighter, smoother and more even-looking complexion.`,
     priceInCents: 45000,
     image: '/products/de-pigmentation-serum.jpeg',
+    galleryImages: ['/products/de-pigmentation-serum.jpeg', '/products/tone-perfect-serum-how-to-use.jpeg'],
     tagline: 'Fade Dark Spots',
     quantity: '10ml',
     benefits: [
@@ -220,6 +233,8 @@ A powerful combination of Vitamin C, Niacinamide, Kojic Acid, Alpha Arbutin, PAD
 Enjoy daily sun care with a comfortable, moisturising feel. A thoughtfully selected blend of UV filters, skin-conditioning ingredients and moisturising agents, including Niacinamide, Panthenol, Glycerin and Shea Butter, to care for your skin while supporting your everyday sun-protection routine.`,
     priceInCents: 44900,
     image: '/products/sunscreen.jpeg',
+    galleryImages: ['/products/sunscreen.jpeg', '/products/sunscreen-back.jpeg', '/products/sunscreen-how-to-use.jpeg', '/products/sunscreen-details.jpeg'],
+    howToUseImage: '/products/sunscreen-how-to-use.jpeg',
     tagline: 'UV Protection',
     quantity: '100ml',
     benefits: [
