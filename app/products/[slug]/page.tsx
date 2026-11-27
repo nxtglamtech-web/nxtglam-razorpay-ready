@@ -39,6 +39,9 @@ export default function ProductDetailPage() {
     )
   }
 
+  const mrpInCents = product.id.endsWith('facewash') ? 39900 : product.id === 'extraa-moisturising-body-lotion' ? 69900 : product.id === 'vitamin-c-serum' || product.id === 'de-pigmentation-serum' ? 64900 : product.priceInCents
+  const hasMrpDifference = mrpInCents > product.priceInCents
+
   function addToBag() {
     if (!product) return
     const key = 'nxtglam-cart-v1'
@@ -54,7 +57,7 @@ export default function ProductDetailPage() {
     <main className="product-detail-page">
       <header className="detail-header">
         <Link href="/" className="detail-logo"><img src="/nxtglam-new-logo.png" alt="NXTGLAM" /></Link>
-        <div className="detail-header-actions"><Link href="/?checkout=1" className="detail-top-cart">🛍 BAG {cartCount > 0 && <span className="detail-cart-count">{cartCount}</span>}</Link><Link href="/" className="detail-back">← Continue Shopping</Link></div>
+        <div className="detail-header-actions"><Link href="/?checkout=1" className="detail-top-cart">{'\u{1F6D2}'} BAG {cartCount > 0 && <span className="detail-cart-count">{cartCount}</span>}</Link><Link href="/" className="detail-back">? Continue Shopping</Link></div>
       </header>
 
       <section className="detail-main">
@@ -75,13 +78,13 @@ export default function ProductDetailPage() {
           <p className="detail-eyebrow">NXTGLAM SKINCARE</p>
           <h1>{product.name}</h1>
           <p className="detail-tagline">{product.tagline}</p>
-          <p className="detail-price">{'\u20B9'}{(product.priceInCents / 100).toLocaleString('en-IN')}</p>
+          <p className="detail-price">{hasMrpDifference ? <><del>{'\u20B9'}{(mrpInCents / 100).toLocaleString('en-IN')}</del><strong>{'\u20B9'}{(product.priceInCents / 100).toLocaleString('en-IN')}</strong></> : <strong>{'\u20B9'}{(product.priceInCents / 100).toLocaleString('en-IN')}</strong>}</p>
           <p className="detail-description">{product.description}</p>
 
           <div className="detail-quantity">
             <span>QUANTITY</span>
             <div className="detail-quantity-controls">
-              <button type="button" onClick={() => setQuantity((q) => Math.max(1, q - 1))}>−</button>
+              <button type="button" onClick={() => setQuantity((q) => Math.max(1, q - 1))}>-</button>
               <span>{quantity}</span>
               <button type="button" onClick={() => setQuantity((q) => q + 1)}>+</button>
             </div>
@@ -134,6 +137,7 @@ export default function ProductDetailPage() {
           <p className="detail-eyebrow">HOW TO USE</p>
           <h2>Usage</h2>
           <p>{product.usage}</p>
+          {product.howToUseImage && <img src={product.howToUseImage} alt={product.name + ' how to use'} className="detail-how-to-image" />}
         </div>
       </section>
 
@@ -141,6 +145,12 @@ export default function ProductDetailPage() {
     </main>
   )
 }
+
+
+
+
+
+
 
 
 

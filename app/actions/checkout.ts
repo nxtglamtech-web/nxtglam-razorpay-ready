@@ -44,6 +44,7 @@ type CustomerDetails = {
 export async function createRazorpayOrder(
   cart: Record<string, number>,
   customer: CustomerDetails,
+  promoCode?: string,
 ) {
   const name = customer.name?.trim()
   const email = customer.email?.trim().toLowerCase()
@@ -59,6 +60,9 @@ export async function createRazorpayOrder(
   if (!address || address.length > 500) throw new Error('Enter your full delivery address')
   if (!city || !state || !/^\d{6}$/.test(pincode)) throw new Error('Enter valid city, state and 6-digit pincode')
 
+  const normalizedPromo = promoCode?.trim().toUpperCase()
+  if (normalizedPromo && normalizedPromo !== 'GLAMDEAL') throw new Error('Invalid promo code')
+
   const lineItems = Object.entries(cart).map(([productId, quantity]) => {
     const product = getProduct(productId)
 
@@ -66,10 +70,13 @@ export async function createRazorpayOrder(
       throw new Error('Invalid cart')
     }
 
+    const discountedPrice = normalizedPromo === 'GLAMDEAL' ? (product.id.endsWith('facewash') ? 19900 : product.id === 'extraa-moisturising-body-lotion' ? 35000 : product.id === 'vitamin-c-serum' || product.id === 'de-pigmentation-serum' ? 32500 : product.priceInCents) : product.priceInCents
+
     return {
       product,
       quantity,
-      amount: product.priceInCents * quantity,
+      unitPrice: discountedPrice,
+      amount: discountedPrice * quantity,
     }
   })
 
@@ -127,7 +134,7 @@ export async function createRazorpayOrder(
       order_id: savedOrder.id,
       product_id: item.product.id,
       product_name: item.product.name,
-      price: item.product.priceInCents,
+      price: item.unitPrice,
       quantity: item.quantity,
     })),
   )
